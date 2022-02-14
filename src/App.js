@@ -1,5 +1,5 @@
-import PropTypes from "prop-types"
-import React from "react"
+import React, { useEffect } from "react"
+import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { Switch, BrowserRouter as Router } from "react-router-dom"
 
@@ -22,6 +22,7 @@ import "./assets/scss/theme.scss"
 // fakeBackend()
 
 const App = () => {
+  const dispatch = useDispatch()
   const layout = useSelector(state => state.Layout)
   function getLayout() {
     let layoutCls = VerticalLayout

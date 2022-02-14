@@ -32,6 +32,7 @@ import DeleteModal from "components/Common/DeleteModal"
 
 import {
   getDrivers as onGetDrivers,
+  getUsers as onGetUsers,
   addNewUser as onAddNewUser,
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
@@ -94,8 +95,9 @@ const ContactsList = props => {
     },
   })
 
-  const { drivers } = useSelector(state => ({
+  const { drivers, users } = useSelector(state => ({
     drivers: state.contacts.drivers,
+    users: state.contacts.users,
   }))
 
   const [userList, setUserList] = useState([])
@@ -220,6 +222,13 @@ const ContactsList = props => {
   }, [dispatch, drivers])
 
   useEffect(() => {
+    if (users && !users.length) {
+      dispatch(onGetUsers())
+      setIsEdit(false)
+    }
+  }, [dispatch, users])
+
+  useEffect(() => {
     setContact(drivers)
     setIsEdit(false)
   }, [drivers])
@@ -295,7 +304,7 @@ const ContactsList = props => {
         </MetaTags>
         <Container fluid>
           {/* Render Breadcrumbs */}
-          <Breadcrumbs title="Consumers" breadcrumbItem="Consumer List" />
+          <Breadcrumbs title="Drivers" breadcrumbItem="Drivers List" />
           <Row>
             <Col lg="12">
               <Card>

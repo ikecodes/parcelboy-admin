@@ -30,6 +30,11 @@ const Dashboard = props => {
   const [modal, setmodal] = useState(false)
   const [subscribemodal, setSubscribemodal] = useState(false)
 
+  const { drivers, users } = useSelector(state => ({
+    drivers: state.contacts.drivers,
+    users: state.contacts.users,
+  }))
+
   const { chartsData } = useSelector(state => ({
     chartsData: state.Dashboard.chartsData,
   }))
@@ -62,10 +67,10 @@ const Dashboard = props => {
     dispatch(onGetChartsData(pType))
   }
 
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(onGetChartsData("yearly"))
-  }, [dispatch])
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   dispatch(onGetChartsData("yearly"))
+  // }, [dispatch])
 
   return (
     <React.Fragment>
@@ -88,14 +93,14 @@ const Dashboard = props => {
                 <Col md="6">
                   <Card className="mini-stats-wid">
                     <CardBody>
-                      <div className="d-flex">
+                      <div className="d-flex mx-5">
                         <div className="flex-grow-1">
                           <p className="text-muted fw-medium">Consumers</p>
-                          <h4 className="mb-0">80</h4>
+                          <h4 className="mb-0">{users?.length}</h4>
                         </div>
                         <div className="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
                           <span className="avatar-title rounded-circle bg-primary">
-                            <i className="bx bx-copy-alt font-size-24"></i>
+                            <i className="bx bx-user font-size-24"></i>
                           </span>
                         </div>
                       </div>
@@ -106,14 +111,14 @@ const Dashboard = props => {
                 <Col md="6">
                   <Card className="mini-stats-wid">
                     <CardBody>
-                      <div className="d-flex">
+                      <div className="d-flex mx-5">
                         <div className="flex-grow-1">
                           <p className="text-muted fw-medium">Drivers</p>
-                          <h4 className="mb-0">18</h4>
+                          <h4 className="mb-0">{drivers?.length}</h4>
                         </div>
                         <div className="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
-                          <span className="avatar-title rounded-circle bg-primary">
-                            <i className="bx bx-copy-alt font-size-24"></i>
+                          <span className="avatar-title rounded-circle bg-success">
+                            <i className="bx bx-car font-size-24"></i>
                           </span>
                         </div>
                       </div>
@@ -122,7 +127,7 @@ const Dashboard = props => {
                 </Col>
               </Row>
 
-              <Card>
+              {/* <Card>
                 <CardBody>
                   <div className="d-sm-flex flex-wrap">
                     <h4 className="card-title mb-4">Email Sent</h4>
@@ -176,10 +181,9 @@ const Dashboard = props => {
                       </ul>
                     </div>
                   </div>
-                  {/* <div className="clearfix"></div> */}
                   <StackedColumnChart periodData={periodData} />
                 </CardBody>
-              </Card>
+              </Card> */}
             </Col>
           </Row>
 
