@@ -29,6 +29,7 @@ import BootstrapTable from "react-bootstrap-table-next"
 //Import Breadcrumb
 import Breadcrumbs from "components/Common/Breadcrumb"
 import DeleteModal from "components/Common/DeleteModal"
+import VerifyModal from "components/Common/VerifyModal"
 
 import {
   getDrivers as onGetDrivers,
@@ -45,6 +46,7 @@ import { useSelector, useDispatch } from "react-redux"
 const ContactsList = props => {
   const dispatch = useDispatch()
   const [contact, setContact] = useState()
+  const [verify, setVerify] = useState(null)
   // validation
   const validation = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
@@ -100,7 +102,6 @@ const ContactsList = props => {
     users: state.contacts.users,
   }))
 
-  const [userList, setUserList] = useState([])
   const [modal, setModal] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
 
@@ -113,7 +114,7 @@ const ContactsList = props => {
   }
   const defaultSorted = [
     {
-      dataField: "id", // if dataField is not match to any column you defined, it will be ignored.
+      dataField: "_id", // if dataField is not match to any column you defined, it will be ignored.
       order: "desc", // desc or asc
     },
   ]
@@ -191,10 +192,10 @@ const ContactsList = props => {
       dataField: "menu",
       isDummyField: true,
       editable: false,
-      text: "Action",
+      text: "Verify",
       // eslint-disable-next-line react/display-name
       formatter: (cellContent, user) => (
-        <div className="d-flex gap-3">
+        <div className="d-flex justify-content-center ">
           {/* <Link className="text-success" to="#">
             <i
               className="mdi mdi-pencil font-size-18"
@@ -206,7 +207,7 @@ const ContactsList = props => {
             <i
               className="mdi mdi-delete font-size-18"
               id="deletetooltip"
-              onClick={() => onClickDelete(user)}
+              onClick={() => onClickVerify(user)}
             ></i>
           </Link>
         </div>
@@ -274,27 +275,26 @@ const ContactsList = props => {
   }
 
   //delete customer
-  const [deleteModal, setDeleteModal] = useState(false)
+  const [verifyModal, setVerifyModal] = useState(false)
 
-  const onClickDelete = drivers => {
-    setContact(drivers)
-    setDeleteModal(true)
+  const onClickVerify = driver => {
+    setVerify(driver._id)
+    setVerifyModal(true)
   }
-
-  const handleDeleteUser = () => {
+  const handleVerifyUser = () => {
     dispatch(onDeleteUser(contact))
     onPaginationPageChange(1)
-    setDeleteModal(false)
+    setVerifyModal(false)
   }
 
   const keyField = "_id"
 
   return (
     <React.Fragment>
-      <DeleteModal
-        show={deleteModal}
-        onDeleteClick={handleDeleteUser}
-        onCloseClick={() => setDeleteModal(false)}
+      <VerifyModal
+        show={verifyModal}
+        onVerifyClick={handleVerifyUser}
+        onCloseClick={() => setVerifyModal(false)}
       />
       <div className="page-content">
         <MetaTags>
