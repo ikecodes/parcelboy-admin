@@ -8,6 +8,9 @@ import {
   GET_DRIVERS,
   GET_DRIVERS_SUCCESS,
   GET_DRIVERS_FAIL,
+  VERIFY_DRIVER,
+  VERIFY_DRIVER_SUCCESS,
+  VERIFY_DRIVER_FAIL,
   ADD_NEW_USER,
   ADD_USER_SUCCESS,
   ADD_USER_FAIL,
@@ -18,6 +21,19 @@ import {
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
 } from "./actionTypes"
+
+export const verifyDriver = id => ({
+  type: VERIFY_DRIVER,
+  payload: id,
+})
+export const verifyDriverSuccess = driver => ({
+  type: VERIFY_DRIVER_SUCCESS,
+  payload: driver,
+})
+export const verifyDriverFail = error => ({
+  type: VERIFY_DRIVER_FAIL,
+  payload: error,
+})
 
 export const getUsers = () => ({
   type: GET_USERS,

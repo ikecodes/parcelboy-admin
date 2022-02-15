@@ -4,6 +4,7 @@ import * as API from "../../api/api"
 import {
   GET_USERS,
   GET_DRIVERS,
+  VERIFY_DRIVER,
   GET_USER_PROFILE,
   ADD_NEW_USER,
   DELETE_USER,
@@ -15,6 +16,8 @@ import {
   getUsersFail,
   getDriversSuccess,
   getDriversFail,
+  verifyDriverSuccess,
+  verifyDriverFail,
   getUserProfileSuccess,
   getUserProfileFail,
   addUserFail,
@@ -43,6 +46,16 @@ function* fetchDrivers() {
     yield put(getDriversSuccess(drivers))
   } catch (error) {
     yield put(getDriversFail(error?.response?.data?.message))
+  }
+}
+function* verifyDriver({ payload }) {
+  try {
+    const {
+      data: { updatedUser },
+    } = yield call(API.verifyDriver, payload)
+    yield put(verifyDriverSuccess(updatedUser))
+  } catch (error) {
+    yield put(verifyDriverFail(error?.response?.data?.message))
   }
 }
 
@@ -86,6 +99,7 @@ function* onAddNewUser({ payload: user }) {
 function* contactsSaga() {
   yield takeEvery(GET_USERS, fetchUsers)
   yield takeEvery(GET_DRIVERS, fetchDrivers)
+  yield takeEvery(VERIFY_DRIVER, verifyDriver)
   yield takeEvery(GET_USER_PROFILE, fetchUserProfile)
   yield takeEvery(ADD_NEW_USER, onAddNewUser)
   yield takeEvery(UPDATE_USER, onUpdateUser)

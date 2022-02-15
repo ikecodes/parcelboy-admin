@@ -34,6 +34,7 @@ import VerifyModal from "components/Common/VerifyModal"
 import {
   getDrivers as onGetDrivers,
   getUsers as onGetUsers,
+  verifyDriver as onVerifyDriver,
   addNewUser as onAddNewUser,
   updateUser as onUpdateUser,
   deleteUser as onDeleteUser,
@@ -203,13 +204,13 @@ const ContactsList = props => {
               onClick={() => handleUserClick(user)}
             ></i>
           </Link> */}
-          <Link className="text-danger" to="#">
-            <i
-              className="mdi mdi-delete font-size-18"
-              id="deletetooltip"
-              onClick={() => onClickVerify(user)}
-            ></i>
-          </Link>
+          <button
+            disabled={user.isVerified}
+            className="btn btn-primary"
+            onClick={() => onClickVerify(user)}
+          >
+            verify
+          </button>
         </div>
       ),
     },
@@ -282,7 +283,7 @@ const ContactsList = props => {
     setVerifyModal(true)
   }
   const handleVerifyUser = () => {
-    dispatch(onDeleteUser(contact))
+    dispatch(onVerifyDriver(verify))
     onPaginationPageChange(1)
     setVerifyModal(false)
   }

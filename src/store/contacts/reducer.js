@@ -1,4 +1,6 @@
 import {
+  VERIFY_DRIVER_SUCCESS,
+  VERIFY_DRIVER_FAIL,
   GET_USERS_SUCCESS,
   GET_USERS_FAIL,
   GET_DRIVERS_SUCCESS,
@@ -42,7 +44,18 @@ const contacts = (state = INIT_STATE, action) => {
         ...state,
         error: action.payload,
       }
-
+    case VERIFY_DRIVER_SUCCESS:
+      return {
+        ...state,
+        drivers: state.drivers.map(driver =>
+          driver._id === action.payload._id ? action.payload : driver
+        ),
+      }
+    case VERIFY_DRIVER_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      }
     case ADD_USER_SUCCESS:
       return {
         ...state,
